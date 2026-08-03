@@ -1,0 +1,557 @@
+/* ==========================================================================
+   SWISSTEK VIEWER CHROME
+   Shared by all three showroom directions.
+
+   White frosted glass over the scene, never dark. The scene supplies the
+   colour; the interface supplies the precision.
+   ========================================================================== */
+
+.stage{ position:fixed; inset:0; background:var(--wash); overflow:hidden; }
+.stage canvas{ position:absolute; inset:0; width:100%; height:100%;
+  display:block; outline:none; }
+
+/* Everything above the scene lives in this layer. */
+.chrome{ position:absolute; inset:0; pointer-events:none; z-index:5; }
+.chrome > *{ pointer-events:auto; }
+
+/* ------------------------------------------------------------ hotspots -- */
+
+.hslayer{ position:absolute; inset:0; pointer-events:none; z-index:4; }
+
+.hs{
+  position:absolute; top:0; left:0;
+  display:flex; align-items:center; gap:0;
+  transform:translate3d(-100px,-100px,0);
+  margin:-23px 0 0 -23px;
+  transition:opacity .3s var(--ease);
+  pointer-events:auto;
+}
+.hs__dot{
+  position:relative; flex:0 0 auto;
+  width:46px; height:46px; border-radius:50%;
+  display:grid; place-items:center;
+  background:rgba(255,255,255,.9);
+  -webkit-backdrop-filter:var(--glass-blur); backdrop-filter:var(--glass-blur);
+  border:1px solid rgba(255,255,255,.95);
+  box-shadow:0 2px 10px rgba(20,24,28,.16), 0 8px 28px rgba(20,24,28,.14);
+  color:var(--red);
+  transition:transform .3s var(--ease), background .3s var(--ease);
+}
+/* the quiet pulse that says "this is live" */
+.hs__dot::after{
+  content:''; position:absolute; inset:-1px; border-radius:50%;
+  border:1px solid rgba(225,37,27,.5);
+  animation:hsPulse 2.9s var(--ease) infinite;
+}
+@keyframes hsPulse{
+  0%   { transform:scale(1);    opacity:.85; }
+  70%  { transform:scale(1.55); opacity:0; }
+  100% { transform:scale(1.55); opacity:0; }
+}
+.hs:hover .hs__dot,
+.hs:focus-visible .hs__dot{ transform:scale(1.09); background:#fff; }
+.hs:focus-visible{ outline:none; }
+.hs:focus-visible .hs__dot{ box-shadow:0 0 0 3px rgba(225,37,27,.35),
+  0 8px 28px rgba(20,24,28,.14); }
+
+.hs__lab{
+  display:flex; flex-direction:column; justify-content:center;
+  max-width:0; overflow:hidden; white-space:nowrap;
+  background:rgba(255,255,255,.94);
+  -webkit-backdrop-filter:var(--glass-blur); backdrop-filter:var(--glass-blur);
+  box-shadow:0 2px 10px rgba(20,24,28,.12), 0 8px 28px rgba(20,24,28,.1);
+  margin-left:-8px; padding:0; opacity:0;
+  transition:max-width .42s var(--ease), padding .42s var(--ease),
+             opacity .3s var(--ease);
+}
+.hs:hover .hs__lab,
+.hs:focus-visible .hs__lab{ max-width:340px; padding:11px 20px 11px 22px; opacity:1; }
+.hs__t{ font-size:15px; font-weight:600; line-height:1.25; color:var(--ink); }
+.hs__s{ font-size:13px; line-height:1.3; color:var(--soft); margin-top:1px; }
+
+.hs--nav .hs__dot{ color:var(--ink); }
+.hs--nav .hs__dot::after{ border-color:rgba(20,24,28,.32); }
+
+/* ---------------------------------------------------------- top chrome -- */
+
+.v-top{ position:absolute; top:0; left:0; right:0;
+  display:flex; align-items:flex-start; gap:16px;
+  padding:20px 22px; }
+
+.v-brand{ display:flex; align-items:center; gap:15px;
+  padding:13px 22px 13px 16px; }
+.v-brand img{ height:32px; width:auto; }
+.v-brand .v-sep{ width:1px; height:30px; background:var(--line); }
+.v-brand .v-ttl{ font-size:14px; font-weight:600; line-height:1.2; }
+.v-brand .v-sub{ font-size:12px; color:var(--soft); line-height:1.3; margin-top:1px;
+  white-space:nowrap; }
+
+.v-tools{ margin-left:auto; display:flex; gap:9px; align-items:stretch; }
+
+.v-seg{ display:flex; overflow:hidden; }
+.v-seg button{
+  padding:13px 16px; font-size:14px; font-weight:600; color:var(--body);
+  border-right:1px solid var(--glass-line); white-space:nowrap;
+  transition:background .18s var(--ease), color .18s var(--ease);
+}
+.v-seg button:last-child{ border-right:none; }
+.v-seg button:hover{ background:rgba(245,247,248,.9); color:var(--ink); }
+.v-seg button.on{ background:var(--ink); color:#fff; }
+
+.v-ico{
+  width:48px; display:grid; place-items:center; color:var(--body);
+  transition:color .18s var(--ease), background .18s var(--ease);
+}
+.v-ico:hover{ color:var(--ink); background:rgba(245,247,248,.9); }
+
+.v-cta{ padding:13px 18px; white-space:nowrap; font-size:14px; font-weight:600;
+  background:var(--red); color:#fff; border:1px solid var(--red);
+  transition:background .18s var(--ease); }
+.v-cta:hover{ background:var(--red-dk); }
+
+/* ------------------------------------------------------- bottom chrome -- */
+
+.v-bottom{ position:absolute; left:0; right:0; bottom:0;
+  display:flex; align-items:flex-end; gap:16px; padding:22px; }
+
+.v-points{ display:flex; align-items:stretch; overflow:hidden; }
+.v-points button{
+  display:flex; align-items:center; gap:12px; padding:12px 18px 12px 12px;
+  border-right:1px solid var(--glass-line);
+  transition:background .18s var(--ease); text-align:left;
+}
+.v-points button:last-child{ border-right:none; }
+.v-points button:hover{ background:rgba(245,247,248,.92); }
+.v-points button.on{ background:rgba(20,24,28,.96); }
+.v-points button.on .vp-n{ color:#fff; }
+.v-points button.on .vp-k{ color:rgba(255,255,255,.6); }
+.vp-th{ width:52px; height:38px; object-fit:cover; flex:0 0 auto;
+  border:1px solid rgba(226,230,233,.7); }
+.vp-n{ display:block; font-size:14px; font-weight:600; line-height:1.2;
+  color:var(--ink); white-space:nowrap; }
+.vp-k{ display:block; font-family:'PlexMono',monospace; font-size:10.5px;
+  letter-spacing:.12em; text-transform:uppercase; color:var(--soft); margin-top:2px;
+  white-space:nowrap; }
+
+.v-zoom{ margin-left:auto; display:flex; }
+.v-zoom button{ width:46px; height:46px; display:grid; place-items:center;
+  border-right:1px solid var(--glass-line); color:var(--body); }
+.v-zoom button:last-child{ border-right:none; }
+.v-zoom button:hover{ color:var(--ink); background:rgba(245,247,248,.9); }
+
+.v-hint{ display:flex; align-items:center; gap:10px; padding:12px 18px;
+  font-size:13px; color:var(--body); }
+.v-hint svg{ color:var(--soft); flex:0 0 auto; }
+
+/* --------------------------------------------------------- side panel -- */
+
+.panel{
+  position:absolute; top:0; right:0; bottom:0; width:min(430px, 92vw);
+  background:rgba(255,255,255,.95);
+  -webkit-backdrop-filter:var(--glass-blur); backdrop-filter:var(--glass-blur);
+  border-left:1px solid var(--glass-line);
+  box-shadow:-8px 0 40px rgba(20,24,28,.1);
+  display:flex; flex-direction:column;
+  transform:translateX(102%); transition:transform .5s var(--ease);
+  z-index:8;
+}
+.panel.open{ transform:none; }
+.panel__head{ padding:26px 28px 22px; border-bottom:1px solid var(--line);
+  display:flex; align-items:flex-start; gap:16px; }
+.panel__ttl{ font-family:'Archivo',sans-serif; font-weight:700; font-size:25px;
+  letter-spacing:-.022em; line-height:1.14; }
+.panel__x{ margin-left:auto; width:38px; height:38px; display:grid;
+  place-items:center; border:1px solid var(--line); color:var(--body);
+  flex:0 0 auto; transition:.18s var(--ease); }
+.panel__x:hover{ border-color:var(--ink); color:var(--ink); }
+.panel__body{ overflow-y:auto; flex:1; }
+.panel__foot{ padding:20px 28px; border-top:1px solid var(--line);
+  background:var(--wash); }
+
+.prow{ display:flex; gap:16px; padding:18px 28px; border-bottom:1px solid var(--line);
+  align-items:center; width:100%; text-align:left;
+  transition:background .18s var(--ease); }
+.prow:hover{ background:var(--wash); }
+.prow__th{ width:58px; height:58px; flex:0 0 auto; background:var(--wash);
+  border:1px solid var(--line); display:grid; place-items:center; overflow:hidden; }
+.prow__th img{ max-width:82%; max-height:82%; object-fit:contain; }
+/* these are spans inside a span, so they must be told to stack */
+.prow__n{ display:block; font-size:16px; font-weight:600; line-height:1.28; }
+.prow__d{ display:block; font-size:14px; color:var(--soft); margin-top:4px;
+  line-height:1.38; }
+.prow__k{ display:block; font-family:'PlexMono',monospace; font-size:11px;
+  letter-spacing:.07em; color:var(--soft); margin-top:6px; }
+
+/* ------------------------------------------------------- product card -- */
+
+.pcard{
+  position:absolute; z-index:9; width:340px;
+  background:rgba(255,255,255,.97);
+  -webkit-backdrop-filter:var(--glass-blur); backdrop-filter:var(--glass-blur);
+  border:1px solid var(--glass-line); box-shadow:var(--shadow-l);
+  opacity:0; transform:translateY(10px) scale(.985); pointer-events:none;
+  transition:opacity .3s var(--ease), transform .3s var(--ease);
+}
+.pcard.open{ opacity:1; transform:none; pointer-events:auto; }
+/* flex + explicit auto sizing, because max-height:100% on a grid item does not
+   reliably clamp against the padded area and the pack shot spills over the copy */
+.pcard__media{ height:190px; background:var(--wash); border-bottom:1px solid var(--line);
+  display:flex; align-items:center; justify-content:center; padding:14px;
+  overflow:hidden; }
+.pcard__media img{ max-height:100%; max-width:100%; width:auto; height:auto;
+  object-fit:contain; }
+.pcard__body{ padding:20px 22px 8px; }
+.pcard__n{ font-family:'Archivo',sans-serif; font-weight:700; font-size:19px;
+  letter-spacing:-.02em; line-height:1.2; }
+.pcard__meta{ display:flex; gap:8px; flex-wrap:wrap; margin-top:10px; }
+.tag{ font-family:'PlexMono',monospace; font-size:10.5px; letter-spacing:.1em;
+  text-transform:uppercase; padding:5px 9px; border:1px solid var(--line);
+  color:var(--body); }
+.tag--red{ border-color:var(--red); color:var(--red); }
+.pcard__d{ font-size:14.5px; line-height:1.5; color:var(--body); margin-top:13px; }
+.pcard__acts{ border-top:1px solid var(--line); margin-top:18px; }
+.pcard__acts button{ display:flex; width:100%; align-items:center; gap:11px;
+  padding:13px 22px; border-bottom:1px solid var(--line); font-size:14.5px;
+  font-weight:500; color:var(--body); text-align:left;
+  transition:background .16s var(--ease), color .16s var(--ease); }
+.pcard__acts button:last-child{ border-bottom:none; }
+.pcard__acts button:hover{ background:var(--wash); color:var(--ink); }
+.pcard__acts .arw{ margin-left:auto; color:var(--soft); }
+.pcard__x{ position:absolute; top:12px; right:12px; width:32px; height:32px;
+  display:grid; place-items:center; background:rgba(255,255,255,.9);
+  border:1px solid var(--line); color:var(--body); }
+.pcard__x:hover{ border-color:var(--ink); color:var(--ink); }
+
+/* swatch strip inside a product card */
+.chips{ display:flex; flex-wrap:wrap; gap:6px; margin-top:13px; }
+.chip{ width:22px; height:22px; border:1px solid rgba(0,0,0,.14);
+  border-radius:50%; transition:transform .18s var(--ease); }
+.chip:hover{ transform:scale(1.16); }
+.chip.on{ box-shadow:0 0 0 2px var(--red); }
+
+/* -------------------------------------------------------------- misc -- */
+
+.v-badge{ display:flex; align-items:center; gap:11px; padding:12px 18px; }
+.v-badge b{ font-family:'Archivo',sans-serif; font-size:15px; font-weight:700;
+  letter-spacing:-.01em; }
+.v-badge span{ font-family:'PlexMono',monospace; font-size:10.5px;
+  letter-spacing:.13em; text-transform:uppercase; color:var(--soft); }
+
+/* Collapsed to a single "i" until hovered. text-indent was the wrong tool
+   here: it only shifts the FIRST line, so every wrapped line after it stayed
+   visible and the note spilled down the left edge as a one word column. Zero
+   font-size hides the text outright, and the marker glyph carries its own
+   size so it is unaffected. */
+.v-note{ position:absolute; left:22px; bottom:118px; width:34px; max-width:34px; height:34px;
+  overflow:hidden; padding:0; font-size:0; line-height:1.5; color:var(--soft);
+  white-space:normal;
+  transition:max-width .4s var(--ease), height .4s var(--ease),
+             padding .4s var(--ease), font-size .2s var(--ease); }
+.v-note::before{ content:'i'; position:absolute; left:0; top:0; width:34px; height:34px;
+  display:grid; place-items:center; font-family:'PlexMono',monospace; font-size:13px;
+  color:var(--soft); }
+.v-note:hover{ width:330px; max-width:330px; height:auto; font-size:12.5px;
+  padding:12px 16px 12px 42px; }
+.v-note:hover::before{ color:var(--red); }
+@media (max-height:700px){ .v-note{ display:none; } }
+
+.loading{ position:absolute; inset:0; display:grid; place-items:center;
+  background:var(--wash); z-index:20; transition:opacity .55s var(--ease); }
+.loading.gone{ opacity:0; pointer-events:none; }
+.loading__in{ text-align:center; }
+.loading__bar{ width:190px; height:2px; background:var(--line); margin:20px auto 0;
+  overflow:hidden; }
+.loading__bar i{ display:block; height:100%; width:36%; background:var(--red);
+  animation:ldg 1.25s var(--ease) infinite; }
+@keyframes ldg{ 0%{transform:translateX(-100%)} 100%{transform:translateX(380%)} }
+
+@media (max-width:900px){
+  .v-brand .v-sep, .v-brand div{ display:none; }
+  .v-points{ max-width:64vw; overflow-x:auto; }
+  .v-hint{ display:none; }
+  .v-note{ display:none; }
+  .panel{ width:100vw; }
+  .pcard{ width:min(340px, 92vw); }
+}
+
+/* ==========================================================================
+   TEN SPACE TOUR
+   Added for the expanded journey: space rail, all-spaces overlay, filters,
+   comparison and the specification drawer. Still white, still frosted.
+   ========================================================================== */
+
+.v-space{ display:flex; align-items:center; gap:14px; padding:11px 18px;
+  max-width:min(38vw,430px); }
+.v-space__no{ font-family:'PlexMono',monospace; font-size:22px; color:var(--red);
+  line-height:1; }
+.v-space__n{ display:block; font-size:15px; font-weight:700; line-height:1.2;
+  white-space:nowrap; }
+.v-space__d{ display:block; font-size:12.5px; color:var(--soft); margin-top:2px;
+  line-height:1.35; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;
+  max-width:330px; }
+
+.v-step{ display:flex; }
+.v-step button{ width:46px; height:46px; display:grid; place-items:center;
+  color:var(--body); border-right:1px solid var(--glass-line); }
+.v-step button:last-child{ border-right:none; }
+.v-step button:hover{ color:var(--ink); background:rgba(245,247,248,.9); }
+
+.v-points{ max-width:min(58vw, 720px); overflow-x:auto; scrollbar-width:thin; }
+.v-points::-webkit-scrollbar{ height:4px; }
+.v-points::-webkit-scrollbar-thumb{ background:var(--edge); }
+
+/* all spaces overlay */
+.overlay{ position:absolute; inset:0; z-index:12; background:rgba(255,255,255,.93);
+  -webkit-backdrop-filter:var(--glass-blur); backdrop-filter:var(--glass-blur);
+  display:flex; flex-direction:column; opacity:0; visibility:hidden;
+  transition:opacity .35s var(--ease), visibility .35s; }
+.overlay.open{ opacity:1; visibility:visible; }
+.overlay__h{ display:flex; align-items:center; padding:26px 30px;
+  border-bottom:1px solid var(--line); }
+.overlay__g{ flex:1; overflow-y:auto; padding:26px 30px 34px;
+  display:grid; grid-template-columns:repeat(auto-fill,minmax(255px,1fr)); gap:18px; }
+.overlay__g button{ text-align:left; border:1px solid var(--line); background:#fff;
+  transition:.22s var(--ease); }
+.overlay__g button:hover{ border-color:var(--ink); box-shadow:var(--shadow-m);
+  transform:translateY(-2px); }
+.gcard__img{ display:block; aspect-ratio:2/1; overflow:hidden; background:var(--wash); }
+.gcard__img img{ width:100%; height:100%; object-fit:cover; }
+.gcard__b{ display:block; padding:16px 18px 20px; }
+.gcard__n{ display:block; font-family:'Archivo',sans-serif; font-weight:700;
+  font-size:18px; letter-spacing:-.018em; margin-top:8px; }
+.gcard__d{ display:block; font-size:13.5px; color:var(--soft); margin-top:6px;
+  line-height:1.4; }
+
+/* shade family filter */
+.fchips{ display:flex; flex-wrap:wrap; gap:5px; margin-top:14px; }
+.fchip{ font-family:'PlexMono',monospace; font-size:10px; letter-spacing:.08em;
+  text-transform:uppercase; padding:5px 9px; border:1px solid var(--line);
+  color:var(--body); transition:.16s var(--ease); }
+.fchip:hover{ border-color:var(--ink); color:var(--ink); }
+.fchip.on{ background:var(--ink); border-color:var(--ink); color:#fff; }
+
+/* specification drawer + comparison share the panel look */
+.drawer{ position:absolute; top:0; right:0; bottom:0; width:min(430px,92vw); z-index:11;
+  background:rgba(255,255,255,.96);
+  -webkit-backdrop-filter:var(--glass-blur); backdrop-filter:var(--glass-blur);
+  border-left:1px solid var(--glass-line); box-shadow:-8px 0 40px rgba(20,24,28,.1);
+  display:flex; flex-direction:column;
+  transform:translateX(102%); transition:transform .45s var(--ease); }
+.drawer.open{ transform:none; }
+.prow .rm{ margin-left:auto; width:28px; height:28px; flex:0 0 auto; color:var(--soft);
+  border:1px solid var(--line); font-size:16px; line-height:1; }
+.prow .rm:hover{ border-color:var(--red); color:var(--red); }
+
+.cmp{ position:absolute; left:50%; top:50%; transform:translate(-50%,-46%) scale(.98);
+  width:min(940px,94vw); max-height:82vh; z-index:14; overflow:auto;
+  background:rgba(255,255,255,.97);
+  -webkit-backdrop-filter:var(--glass-blur); backdrop-filter:var(--glass-blur);
+  border:1px solid var(--glass-line); box-shadow:var(--shadow-l);
+  opacity:0; visibility:hidden; transition:.35s var(--ease); }
+.cmp.open{ opacity:1; visibility:visible; transform:translate(-50%,-50%) scale(1); }
+.cmp__b{ display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); }
+.cmpcol{ padding:22px 24px 26px; border-right:1px solid var(--line); }
+.cmpcol:last-child{ border-right:none; }
+.cmpcol__img{ height:150px; display:flex; align-items:center; justify-content:center;
+  background:var(--wash); border:1px solid var(--line); padding:12px; }
+.cmpcol__img img{ max-width:100%; max-height:100%; width:auto; height:auto; object-fit:contain; }
+.cmpcol__n{ font-family:'Archivo',sans-serif; font-weight:700; font-size:18px;
+  letter-spacing:-.018em; margin-top:16px; line-height:1.2; }
+.cmpcol dl{ margin:14px 0 12px; border-top:1px solid var(--line); }
+.cmpcol dt{ font-family:'PlexMono',monospace; font-size:10px; letter-spacing:.1em;
+  text-transform:uppercase; color:var(--soft); padding-top:9px; }
+.cmpcol dd{ font-size:14.5px; padding-bottom:9px; border-bottom:1px solid var(--line); }
+
+.enq{ position:fixed; inset:0; background:rgba(20,24,28,.42); z-index:30;
+  display:none; align-items:center; justify-content:center; }
+.enq__c{ background:#fff; width:560px; max-width:92vw; border:1px solid var(--line);
+  box-shadow:var(--shadow-l); }
+.enq__c h3{ padding:26px 30px 0; font-size:23px; letter-spacing:-.022em; }
+.enq__c p{ padding:11px 30px 0; font-size:15px; color:var(--body); line-height:1.55; }
+.enq__c ul{ list-style:none; margin:20px 0 0; border-top:1px solid var(--line); }
+.enq__c li{ padding:12px 30px; border-bottom:1px solid var(--line); font-size:15px; }
+.enq__c .foot{ padding:20px 30px; display:flex; justify-content:space-between;
+  align-items:center; }
+
+@media (max-width:900px){ .v-space__d{ display:none; } .cmp{ width:96vw; } }
+
+/* ==========================================================================
+   WHAT SEPARATES DIRECTION 01 FROM DIRECTION 02
+
+   They ran the same engine with a mode flag that was never read, so they were
+   the same app. The proposal describes two genuinely different journeys, so
+   they now look and behave differently:
+
+   01  category-led. A persistent category index, and zone gateways in the
+       scene carrying permanent name plates. You pick a family, not a product.
+   02  product-led. No index. Small pins on individual products, a card opens
+       where you clicked, and a mini-map drives the guided route.
+   ========================================================================== */
+
+/* --- 01: persistent category index --------------------------------------- */
+.cats{ position:absolute; right:22px; top:96px; width:310px; z-index:7;
+  display:flex; flex-direction:column; max-height:calc(100vh - 210px); }
+.cats__h{ padding:17px 20px 15px; border-bottom:1px solid var(--glass-line); }
+.cats__t{ font-family:'Archivo',sans-serif; font-weight:700; font-size:19px;
+  letter-spacing:-.02em; margin-top:7px; }
+.cats__b{ overflow-y:auto; }
+.crow{ display:flex; gap:13px; align-items:center; width:100%; text-align:left;
+  padding:12px 18px; border-bottom:1px solid var(--glass-line);
+  transition:background .16s var(--ease); }
+.crow:last-child{ border-bottom:none; }
+.crow:hover{ background:rgba(245,247,248,.92); }
+.crow.on{ background:rgba(20,24,28,.95); }
+.crow.on .crow__n{ color:#fff; }
+.crow.on .crow__d{ color:rgba(255,255,255,.62); }
+.crow__i{ width:44px; height:34px; flex:0 0 auto; object-fit:cover;
+  border:1px solid rgba(226,230,233,.8); }
+.crow__n{ display:block; font-size:14.5px; font-weight:600; line-height:1.2; }
+.crow__d{ display:block; font-size:12px; color:var(--soft); margin-top:2px; }
+
+/* 01: zone gateways carry a permanent plate, like signage in the room */
+body.m-cat .hs__dot{ width:54px; height:54px; }
+body.m-cat .hs{ margin:-27px 0 0 -27px; }
+body.m-cat .hs__lab{ max-width:300px; padding:12px 22px 12px 24px; opacity:1; }
+body.m-cat .hs__t{ font-size:15.5px; }
+body.m-cat .cats{ display:flex; }
+body.m-cat .map{ display:none; }
+
+/* --- 02: product pins stay small and quiet until hovered ----------------- */
+body.m-prod .hs__dot{ width:40px; height:40px; }
+body.m-prod .hs{ margin:-20px 0 0 -20px; }
+body.m-prod .cats{ display:none; }
+
+/* --- 02: guided route mini-map ------------------------------------------- */
+.map{ position:absolute; right:22px; bottom:120px; width:238px; padding:15px 17px 13px;
+  z-index:7; }
+.map__t{ font-family:'PlexMono',monospace; font-size:10.5px; letter-spacing:.13em;
+  text-transform:uppercase; color:var(--soft); }
+.map__plan{ position:relative; height:150px; margin-top:11px;
+  border:1px solid var(--line); background:var(--wash); }
+.map__pt{ position:absolute; width:25px; height:25px; margin:-12px 0 0 -12px;
+  border-radius:50%; display:grid; place-items:center; background:#fff;
+  border:1px solid var(--edge); font-family:'PlexMono',monospace; font-size:10px;
+  color:var(--body); transition:.2s var(--ease); }
+.map__pt:hover{ border-color:var(--ink); color:var(--ink); transform:scale(1.12); }
+.map__pt.on{ background:var(--red); border-color:var(--red); color:#fff; }
+.map__n{ font-size:13px; color:var(--ink); margin-top:10px; font-weight:600; }
+
+@media (max-width:1280px){ .cats, .map{ display:none !important; } }
+
+/* A marker near the right edge renders its plate to the left instead, so a
+   permanently open label never runs off screen. */
+.hs.flip{ flex-direction:row-reverse; }
+.hs.flip .hs__lab{ margin-left:0; margin-right:-8px; text-align:right; }
+.hs.flip .hs__lab > *{ text-align:right; }
+.hs.flip:hover .hs__lab,
+.hs.flip:focus-visible .hs__lab,
+body.m-cat .hs.flip .hs__lab{ padding:12px 24px 12px 22px; }
+
+/* ==========================================================================
+   FILMS  (Direction 02 only)
+
+   Swisstek publishes real usage guides, fabrication walkthroughs and product
+   films on its own two YouTube channels. Direction 02 plays them where the
+   decision is being made, so the surround stays white and the player itself
+   is the only dark rectangle on screen.
+   ========================================================================== */
+
+/* --- the film marker in the room ----------------------------------------- */
+body.m-prod .hs--film .hs__dot{ width:46px; height:46px;
+  background:var(--red); border-color:rgba(255,255,255,.9); color:#fff;
+  box-shadow:0 2px 10px rgba(225,37,27,.30), 0 10px 30px rgba(20,24,28,.18); }
+body.m-prod .hs--film{ margin:-23px 0 0 -23px; }
+body.m-prod .hs--film .hs__dot::after{ border-color:rgba(225,37,27,.62); }
+body.m-prod .hs--film:hover .hs__dot{ background:var(--red-dk); }
+body.m-prod .hs--film .hs__lab{ max-width:260px; opacity:1;
+  padding:11px 20px 11px 22px; }
+body.m-prod .hs--film .hs__t{ font-size:14px; }
+
+/* --- the action on the product card -------------------------------------- */
+ /* Scoped to beat `.pcard__acts button` on specificity rather than with an
+    !important, which would also beat the inline display:none used to hide
+    the action on a product Swisstek has not filmed. */
+.pcard__acts button.cfilm{ width:100%; align-items:center; gap:11px;
+  padding:15px 20px; border-bottom:1px solid var(--line);
+  background:var(--wash); color:var(--ink); font-size:14.5px; font-weight:600;
+  text-align:left; transition:.2s var(--ease); }
+.pcard__acts button.cfilm:hover{ background:#fff; }
+.cfilm__p{ flex:0 0 auto; width:26px; height:26px; border-radius:50%;
+  display:grid; place-items:center; background:var(--red); color:#fff;
+  padding-left:2px; }
+
+/* --- the lightbox --------------------------------------------------------- */
+.vbox{ position:fixed; inset:0; z-index:60; display:none;
+  align-items:center; justify-content:center; padding:34px;
+  background:rgba(232,236,239,.78);
+  -webkit-backdrop-filter:blur(14px); backdrop-filter:blur(14px); }
+.vbox.open{ display:flex; }
+.vbox__c{ width:min(1180px,100%); max-height:100%; display:flex; flex-direction:column;
+  background:#fff; border:1px solid var(--line);
+  box-shadow:0 30px 90px rgba(20,24,28,.24); overflow:hidden; }
+.vbox__h{ display:flex; align-items:flex-start; gap:18px;
+  padding:22px 26px 20px; border-bottom:1px solid var(--line); }
+.vbox__h .panel__x{ margin-left:auto; }
+.vbox__b{ display:grid; grid-template-columns:1fr 336px; min-height:0; flex:1;
+  max-height:calc(100vh - 190px); }
+.vbox__stage{ display:flex; flex-direction:column; min-width:0;
+  border-right:1px solid var(--line); }
+.vbox__frame{ position:relative; aspect-ratio:16/9; width:100%;
+  background:var(--wash); overflow:hidden; }
+.vbox__frame iframe{ position:absolute; inset:0; width:100%; height:100%; border:0; }
+
+.vbox__wait,
+.vbox__off{ position:absolute; inset:0; display:none; flex-direction:column;
+  align-items:center; justify-content:center; gap:13px; text-align:center;
+  padding:30px; background:var(--wash); z-index:2; }
+.vbox__wait.show,
+.vbox__off.show{ display:flex; }
+.vbox__off p{ max-width:420px; font-size:15px; line-height:1.6; color:var(--body); }
+.vbox__spin{ width:26px; height:26px; border-radius:50%;
+  border:2px solid var(--edge); border-top-color:var(--red);
+  animation:vspin .8s linear infinite; }
+@keyframes vspin{ to{ transform:rotate(360deg); } }
+
+.vbox__meta{ display:flex; align-items:center; gap:18px;
+  padding:16px 26px; border-top:1px solid var(--line); }
+.vbox__t{ display:block; font-size:15px; color:var(--ink); font-weight:600; }
+.vbox__c2{ display:block; font-family:'PlexMono',monospace; font-size:11px;
+  letter-spacing:.09em; text-transform:uppercase; color:var(--soft); margin-top:5px; }
+.vbox__ext{ margin-left:auto; flex:0 0 auto; display:inline-flex; align-items:center;
+  gap:7px; font-size:13.5px; color:var(--body); border-bottom:1px solid var(--edge);
+  padding-bottom:2px; }
+.vbox__ext:hover{ color:var(--red); border-color:var(--red); }
+
+.vbox__list{ overflow-y:auto; min-height:0; background:#fff; }
+.vrow{ display:flex; gap:13px; width:100%; text-align:left; padding:12px 18px;
+  border-bottom:1px solid var(--line); transition:.2s var(--ease); }
+.vrow:hover{ background:var(--wash); }
+.vrow.on{ background:var(--wash); box-shadow:inset 3px 0 0 var(--red); }
+.vrow__th{ position:relative; flex:0 0 auto; width:104px; height:59px;
+  background:var(--wash); border:1px solid var(--line); overflow:hidden;
+  display:grid; place-items:center; }
+.vrow__th img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
+.vrow__p{ position:relative; z-index:1; width:24px; height:24px; border-radius:50%;
+  display:grid; place-items:center; background:rgba(255,255,255,.92); color:var(--red);
+  padding-left:2px; box-shadow:0 2px 8px rgba(20,24,28,.2); }
+.vrow__d{ position:absolute; z-index:1; right:4px; bottom:4px;
+  font-family:'PlexMono',monospace; font-size:10px; color:#fff;
+  background:rgba(20,24,28,.8); padding:1px 5px; }
+.vrow__b{ min-width:0; display:flex; flex-direction:column; justify-content:center; }
+.vrow__n{ display:block; font-size:14px; font-weight:600; color:var(--ink);
+  line-height:1.35; }
+.vrow__k{ display:block; font-family:'PlexMono',monospace; font-size:10px;
+  letter-spacing:.08em; text-transform:uppercase; color:var(--soft); margin-top:5px;
+  overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.vempty{ padding:30px 24px; }
+
+/* The room keeps rendering behind the player but stops taking input, so a
+   stray drag does not spin the space while someone is watching. */
+body.vopen .hslayer{ pointer-events:none; }
+
+@media (max-width:1100px){
+  .vbox{ padding:16px; }
+  .vbox__b{ grid-template-columns:1fr; }
+  .vbox__stage{ border-right:none; }
+  .vbox__list{ max-height:250px; border-top:1px solid var(--line); }
+}
