@@ -28,7 +28,7 @@
 (function (w, d) {
   'use strict';
 
-  var OPEN = True;
+  var OPEN = False;
   var HASH = '2c57c7a59825f14f654e0eddf742343bad8fe78679bbafc1f5c5cd513eb78e48';          /* SHA-256 of the passphrase */
   var KEY  = 'sw.pitch.open';
 
