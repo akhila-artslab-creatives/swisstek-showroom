@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Swisstek | For the perfect finish</title>
+<meta name="description" content="Swisstek (Ceylon) PLC. Tile adhesive, tile grout, waterproofing, skim coat, Roof Master, Swissparkett and aluminium. The only Ceylonese company with SLS Certification for Tile Mortar and Tile Grout.">
+<link rel="stylesheet" href="assets/css/system.css">
+<style>
+/* ------------------------------------------------------------- nav ---- */
+.nav__drop{ position:relative; }
+.nav__menu{ position:absolute; top:100%; left:50%; transform:translateX(-50%) translateY(-6px);
+  min-width:230px; background:var(--paper); border:1px solid var(--line);
+  box-shadow:var(--shadow-m); padding:8px 0; opacity:0; visibility:hidden;
+  transition:opacity .2s var(--ease), transform .2s var(--ease); }
+.nav__drop:hover .nav__menu, .nav__drop:focus-within .nav__menu{
+  opacity:1; visibility:visible; transform:translateX(-50%) translateY(0); }
+.nav__menu a{ display:block; padding:10px 22px; font-size:16px; color:var(--body); }
+.nav__menu a:hover{ background:var(--wash); color:var(--ink); }
+.nav__hot{ display:flex; align-items:center; gap:9px; }
+.nav__hot b{ font-size:16px; }
+
+/* ------------------------------------------------------------ hero ---- */
+.hero{ position:relative; height:min(88vh,820px); min-height:540px; overflow:hidden;
+  background:var(--wash); }
+.hero__sl{ position:absolute; inset:0; opacity:0; transition:opacity 1.3s var(--ease); }
+.hero__sl.on{ opacity:1; }
+.hero__sl img{ width:100%; height:100%; object-fit:cover;
+  transform:scale(1.06); transition:transform 8s linear; }
+.hero__sl.on img{ transform:scale(1); }
+.hero::after{ content:''; position:absolute; inset:0; pointer-events:none;
+  background:linear-gradient(96deg, rgba(255,255,255,.96) 0%, rgba(255,255,255,.9) 34%,
+    rgba(255,255,255,.5) 60%, rgba(255,255,255,.08) 100%); }
+.hero__in{ position:absolute; inset:0; display:flex; align-items:center; z-index:2; }
+.hero__c{ max-width:900px; }
+/* absolutely positioned slides need a box tall enough for the LONGEST
+   headline, or the third slide clips into the buttons */
+.hero__h{ position:relative; min-height:2.35em; font-size:clamp(38px,4.7vw,72px);
+  line-height:1.06; letter-spacing:-.03em; }
+.hero__h span{ position:absolute; inset:0; opacity:0; transform:translateY(14px);
+  transition:opacity .8s var(--ease), transform .8s var(--ease); }
+.hero__h span.on{ opacity:1; transform:none; }
+.hero__acts{ display:flex; flex-wrap:wrap; gap:14px; margin-top:36px; }
+.hero__dots{ position:absolute; left:0; bottom:38px; display:flex; gap:9px; z-index:3; }
+.hero__dots button{ width:30px; height:3px; background:var(--edge); transition:.25s var(--ease); }
+.hero__dots button.on{ background:var(--red); width:52px; }
+
+/* -------------------------------------------------------- collections -- */
+.coll{ display:grid; grid-template-columns:repeat(3,1fr); gap:0; border:1px solid var(--line); }
+.coll a{ position:relative; display:block; border-right:1px solid var(--line); }
+.coll a:last-child{ border-right:none; }
+.coll__img{ aspect-ratio:4/3.1; overflow:hidden; background:var(--wash); }
+.coll__img img{ width:100%; height:100%; object-fit:cover; transition:transform .8s var(--ease); }
+.coll a:hover .coll__img img{ transform:scale(1.05); }
+.coll__b{ padding:26px 28px 30px; }
+.coll__n{ font-family:'Archivo',sans-serif; font-weight:700; font-size:24px;
+  letter-spacing:-.022em; }
+
+/* ------------------------------------------------------------ tiler ---- */
+.tiler{ background:var(--ink); color:#fff; }
+.tiler .lede{ color:rgba(255,255,255,.74); }
+.tiler .btn{ background:var(--red); border-color:var(--red); color:#fff; }
+.tiler .btn:hover{ background:var(--red-dk); border-color:var(--red-dk); }
+
+/* ------------------------------------------------------------- news ---- */
+.news a{ display:block; padding:26px 0; border-top:1px solid var(--line); }
+.news a:last-child{ border-bottom:1px solid var(--line); }
+.news a:hover .news__t{ color:var(--red); }
+.news__t{ font-size:20px; font-weight:600; line-height:1.34; transition:color .2s var(--ease);
+  max-width:60ch; }
+
+/* ------------------------------------------------------------ quotes -- */
+.quote{ border:1px solid var(--line); padding:32px 30px; display:flex;
+  flex-direction:column; }
+.quote p{ font-size:19px; line-height:1.55; }
+.quote .who{ margin-top:auto; padding-top:22px; }
+.quote .who b{ display:block; font-size:17px; }
+.quote .who span{ font-size:15px; color:var(--soft); }
+.quote::before{ content:''; display:block; width:34px; height:2px; background:var(--red);
+  margin-bottom:20px; }
+
+/* -------------------------------------------------------- aluminium ---- */
+.alu{ display:grid; grid-template-columns:1fr 1fr; border:1px solid var(--line); }
+.alu__img{ position:relative; min-height:420px; background:var(--wash); }
+.alu__img img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
+.alu__t{ padding:clamp(30px,3.6vw,58px); }
+.alu__cats{ margin-top:24px; border-top:1px solid var(--line); }
+.alu__cats div{ padding:15px 0; border-bottom:1px solid var(--line); display:flex;
+  gap:18px; align-items:baseline; }
+.alu__cats b{ font-size:17px; flex:0 0 148px; }
+.alu__cats span{ font-size:16px; color:var(--soft); }
+@media (max-width:980px){ .alu{ grid-template-columns:1fr; } .coll{ grid-template-columns:1fr; }
+  .coll a{ border-right:none; border-bottom:1px solid var(--line); } }
+</style>
+<link rel="stylesheet" href="assets/css/gate.css">
+<script src="assets/js/gate.js"></script>
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap nav__in">
+    <a class="nav__logo" href="index.html"><img src="assets/img/logo.webp" alt="Swisstek, for the perfect finish"></a>
+    <nav class="nav__links">
+      <a href="index.html" class="on">Home</a>
+      <span class="nav__drop">
+        <a href="#collections">Products</a>
+        <span class="nav__menu">
+          <a href="#collections">Finishing</a>
+          <a href="#aluminium">Aluminium</a>
+          <a href="#products">Roof Master</a>
+          <a href="#products">DIY Range</a>
+          <a href="#products">Swissparkett</a>
+          <a href="#collections">Cleaning</a>
+          <a href="#collections">Beautification</a>
+          <a href="#products">All Products</a>
+        </span>
+      </span>
+      <a href="#downloads">Downloadables</a>
+      <a href="#about">About Us</a>
+      <a href="#contact">Contact Us</a>
+      <a class="nav__hot" href="tel:0117807000"><b>0117807000</b></a>
+      <a class="btn btn--sm btn--primary" href="showroom/index.html">Virtual showroom</a>
+    </nav>
+  </div>
+</header>
+
+<!-- ============================================================== hero -- -->
+<section class="hero" id="hero">
+  <div class="hero__sl on"><img src="assets/img/scenes/hero-living.webp" alt=""></div>
+  <div class="hero__sl"><img src="assets/img/scenes/app-bathroom.webp" alt=""></div>
+  <div class="hero__sl"><img src="assets/img/scenes/app-flooring.webp" alt=""></div>
+  <div class="hero__in">
+    <div class="wrap" style="width:100%;">
+      <div class="hero__c">
+        <div class="mono red">Swisstek</div>
+        <h1 class="t-hero hero__h" style="margin-top:16px;">
+          <span class="on">Bring your dream space to life.</span>
+          <span>Experience elegance of luxury spaces.</span>
+          <span>Indulge in the comfort of luxury living.</span>
+        </h1>
+        <div class="hero__acts">
+          <a class="btn btn--lg btn--primary" href="showroom/index.html">
+            Enter the virtual showroom
+            <svg class="arw" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+          <a class="btn btn--lg" href="#collections">View products</a>
+        </div>
+      </div>
+      <div class="hero__dots" id="dots" style="position:relative; margin-top:56px; bottom:auto;">
+        <button class="on" data-i="0" aria-label="Slide 1"></button>
+        <button data-i="1" aria-label="Slide 2"></button>
+        <button data-i="2" aria-label="Slide 3"></button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================== welcome -- -->
+<section class="section" id="about">
+  <div class="wrap" style="display:grid; grid-template-columns:1fr 1.15fr; gap:clamp(28px,5vw,86px); align-items:start;">
+    <div>
+      <div class="eyebrow"><span class="mono red">Since 1967</span></div>
+      <h2 class="t-xl" id="welcomeH"></h2>
+    </div>
+    <div>
+      <p class="lede" id="welcomeB"></p>
+      <div class="joint" style="margin:34px 0;"><b></b><i></i></div>
+      <div class="grid g-2" style="gap:26px;">
+        <div><div class="mono red">Established</div><p class="body" style="margin-top:8px;">Founded 1967 as Parquet (Ceylon) Ltd with Swiss company Bauwerk AG. Listed on the Colombo Stock Exchange in 1983.</p></div>
+        <div><div class="mono red">Certification</div><p class="body" style="margin-top:8px;">ISO 9001 certified since 2015. SLS 1375 for tile adhesive and SLS 1376 for tile grout.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================================================= collections -- -->
+<section class="section wash" id="collections">
+  <div class="wrap">
+    <div class="eyebrow"><span class="mono red">The collections</span></div>
+    <h2 class="t-xl reveal" style="max-width:17ch;">All tilers' problems under one roof.</h2>
+    <div class="coll reveal" style="margin-top:46px;" id="collGrid"></div>
+  </div>
+</section>
+
+<!-- ========================================================== products -- -->
+<section class="section" id="products">
+  <div class="wrap">
+    <div class="eyebrow"><span class="mono red">Featured products</span></div>
+    <div class="grid g-4" id="prodGrid" style="margin-top:8px;"></div>
+    <div style="margin-top:40px;">
+      <a class="btn" href="showroom/direction-02.html">See them in the showroom
+        <svg class="arw" viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+    </div>
+  </div>
+</section>
+
+<!-- ========================================================= aluminium -- -->
+<section class="section wash" id="aluminium">
+  <div class="wrap">
+    <div class="eyebrow"><span class="mono red">Swisstek Aluminium</span></div>
+    <div class="alu reveal">
+      <div class="alu__img"><img id="aluImg" src="assets/img/scenes/hero-showroom.webp" alt="Swisstek aluminium systems"></div>
+      <div class="alu__t">
+        <h2 class="t-lg">Precision engineered<br>aluminium extrusions.</h2>
+        <p class="body" style="margin-top:16px;" id="aluBlurb"></p>
+        <div class="alu__cats" id="aluCats"></div>
+        <div style="margin-top:28px; display:flex; gap:12px; flex-wrap:wrap;">
+          <a class="btn btn--primary" href="showroom/direction-01.html?cat=alu-arch">Explore aluminium</a>
+          <a class="btn" href="https://www.swisstekaluminium.com/" target="_blank" rel="noopener">swisstekaluminium.com</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ shades -- -->
+<section class="section" id="shades">
+  <div class="wrap">
+    <div class="eyebrow"><span class="mono red">Swisstek tile grout</span></div>
+    <div style="display:flex; flex-wrap:wrap; gap:32px; align-items:flex-end; justify-content:space-between;">
+      <h2 class="t-xl reveal" style="max-width:13ch;">Twenty five shades. One joint.</h2>
+      <p class="body reveal" style="max-width:440px;">
+        Polymer Modified and Super Polymer, both SLS 1376 certified. One kilogram covers
+        80 to 100 square feet depending on tile size.
+      </p>
+    </div>
+    <div class="shades reveal" id="shadeGrid" style="margin-top:44px;"></div>
+    <p class="small" style="margin-top:18px; color:var(--soft); max-width:760px;">
+      Shade names and codes from the Swisstek product catalogue. Screen colours are
+      indicative: actual product colours may vary slightly from those shown.
+    </p>
+  </div>
+</section>
+
+<!-- ============================================================= tiler -- -->
+<section class="section tiler">
+  <div class="wrap" style="display:flex; flex-wrap:wrap; gap:40px; justify-content:space-between; align-items:center;">
+    <div>
+      <div class="mono red">Tiler Club</div>
+      <h2 class="t-xl" style="margin-top:14px; max-width:16ch;" id="tilerH"></h2>
+    </div>
+    <a class="btn btn--lg" id="tilerCta" href="#contact"></a>
+  </div>
+</section>
+
+<!-- ============================================================== news -- -->
+<section class="section" id="downloads">
+  <div class="wrap" style="display:grid; grid-template-columns:1fr 2fr; gap:clamp(28px,5vw,80px); align-items:start;">
+    <div>
+      <div class="eyebrow"><span class="mono red">Latest news</span></div>
+      <p class="body">Announcements from Swisstek and the group.</p>
+    </div>
+    <div class="news" id="newsList"></div>
+  </div>
+</section>
+
+<!-- ======================================================= testimonials -- -->
+<section class="section wash">
+  <div class="wrap">
+    <div class="eyebrow"><span class="mono red">What they say</span></div>
+    <div class="grid g-3" id="quotes" style="margin-top:38px;"></div>
+  </div>
+</section>
+
+<!-- ============================================================= close -- -->
+<section class="section" id="contact">
+  <div class="wrap" style="display:flex; flex-wrap:wrap; gap:44px; justify-content:space-between; align-items:flex-end;">
+    <div>
+      <div class="mono red">Specify with us</div>
+      <h2 class="t-xl" style="margin-top:14px; max-width:15ch;">Tell us what you are building.</h2>
+      <p class="lede" style="margin-top:18px; max-width:520px;">
+        Configure a space in the virtual showroom and send the product schedule
+        straight to our technical team.
+      </p>
+    </div>
+    <div style="display:flex; flex-wrap:wrap; gap:14px;">
+      <a class="btn btn--lg btn--primary" href="showroom/index.html">Enter the virtual showroom</a>
+      <a class="btn btn--lg" href="tel:0117807000">Hotline 0117807000</a>
+    </div>
+  </div>
+</section>
+
+<footer class="foot">
+  <div class="wrap" style="display:flex; flex-wrap:wrap; gap:44px; justify-content:space-between;">
+    <div style="max-width:320px;">
+      <img src="assets/img/logo.webp" alt="Swisstek" style="height:38px;">
+      <p class="small" style="margin-top:18px;">Swisstek (Ceylon) PLC. Part of the Lanka Walltiles and Vallibel One group.</p>
+    </div>
+    <div><div class="mono">Head office</div><p class="small" style="margin-top:10px;">No. 215, Nawala Road,<br>Narahenpita, Colombo 05</p></div>
+    <div><div class="mono">Factory</div><p class="small" style="margin-top:10px;">Factory Complex,<br>Balummahara, Imbulgoda</p></div>
+    <div><div class="mono">Hotline</div><p class="small" style="margin-top:10px;">0117807000</p></div>
+  </div>
+  <div class="wrap" style="margin-top:50px; padding-top:22px; border-top:1px solid var(--line); display:flex; justify-content:space-between; flex-wrap:wrap; gap:14px;">
+    <span class="small" style="color:var(--soft);">Concept site by Artslab Creatives</span>
+    <span class="small" style="color:var(--soft);">For the perfect finish</span>
+  </div>
+</footer>
+
+<script src="assets/js/data.js"></script>
+<script src="assets/js/ui.js"></script>
+<script>
+SW.base = '';
+
+/* hero slider, their three headlines */
+(function(){
+  var slides = document.querySelectorAll('.hero__sl');
+  var heads  = document.querySelectorAll('.hero__h span');
+  var dots   = document.querySelectorAll('#dots button');
+  var i = 0, timer;
+  function show(n){
+    i = n % slides.length;
+    [slides, heads, dots].forEach(function(set){
+      set.forEach(function(el,k){ el.classList.toggle('on', k===i); });
+    });
+  }
+  function loop(){ timer = setInterval(function(){ show(i+1); }, 6200); }
+  dots.forEach(function(d){ d.onclick = function(){ clearInterval(timer); show(+d.dataset.i); loop(); }; });
+  loop();
+})();
+
+document.getElementById('welcomeH').textContent = SW.site.welcomeHeading;
+document.getElementById('welcomeB').textContent = SW.site.welcomeBody;
+document.getElementById('tilerH').textContent   = SW.site.tilerClub.heading;
+document.getElementById('tilerCta').textContent = SW.site.tilerClub.cta;
+document.getElementById('aluBlurb').textContent = SW.aluminium.blurb;
+
+/* the three real collections */
+document.getElementById('collGrid').innerHTML = SW.collections.map(function(c){
+  return '<a href="showroom/direction-01.html?cat='+c.id+'">' +
+    '<span class="coll__img"><img src="'+SW.scene(c.scene)+'" alt="'+c.name+'"></span>' +
+    '<span class="coll__b"><span class="mono red">Collection</span>' +
+    '<span class="coll__n" style="display:block;margin-top:10px;">'+c.name+'</span>' +
+    '<span class="small" style="display:block;margin-top:8px;">'+c.note+'</span></span></a>';
+}).join('');
+
+/* featured products, real pack shots */
+['adhesiveUltraGrip','groutPolymer','aquaShield','sw101','skimPremium','groutSealer',
+ 'silicone','swissparkett'].forEach(function(){});
+document.getElementById('prodGrid').innerHTML =
+ ['adhesiveUltraGrip','groutPolymer','aquaShield','sw101','skimPremium','groutSealer',
+  'silicone','swissparkett'].map(function(k){
+  var p = SW.products[k];
+  return '<div class="card reveal">' +
+    '<div class="card__media card__media--pack"><img src="'+SW.img(p.img)+'" alt="'+p.name+'"></div>' +
+    '<div class="card__body"><h3 style="font-size:19px;line-height:1.24;">'+p.name+'</h3>' +
+    (p.pack ? '<div class="mono" style="margin-top:10px;">'+p.pack+(p.std?' &middot; '+p.std:'')+'</div>' : '') +
+    '<p class="small" style="margin-top:11px;">'+p.blurb+'</p></div></div>';
+}).join('');
+
+/* aluminium categories */
+document.getElementById('aluCats').innerHTML = SW.aluminium.categories.map(function(c){
+  return '<div><b>'+c.name+'</b><span>'+c.products.length+' products &middot; '+c.note+'</span></div>';
+}).join('');
+
+renderShades(document.getElementById('shadeGrid'), SW.groutShades);
+
+document.getElementById('newsList').innerHTML = SW.site.news.map(function(t){
+  return '<a href="#" class="reveal"><div class="mono">Swisstek news</div>' +
+    '<div class="news__t" style="margin-top:9px;">'+t+'</div></a>';
+}).join('');
+
+document.getElementById('quotes').innerHTML = SW.site.testimonials.map(function(t){
+  return '<div class="quote reveal"><p>&ldquo;'+t.q+'&rdquo;</p>' +
+    '<div class="who"><b>'+t.n+'</b><span>'+t.r+'</span></div></div>';
+}).join('');
+</script>
+</body>
+</html>
