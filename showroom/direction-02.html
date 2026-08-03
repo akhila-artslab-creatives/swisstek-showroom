@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Direction 02 · Product-Focused 360 Showroom | Swisstek Virtual Showroom</title>
+<link rel="stylesheet" href="../assets/css/system.css">
+<link rel="stylesheet" href="../assets/css/viewer.css">
+<link rel="stylesheet" href="../assets/css/gate.css">
+<script src="../assets/js/gate.js"></script>
+</head>
+<body>
+
+<div class="stage">
+  <canvas id="view"></canvas>
+  <div class="hslayer" id="hs"></div>
+
+  <div class="chrome">
+
+    <div class="v-top">
+      <a class="v-brand glass" href="index.html" title="Back to the three directions">
+        <img src="../assets/img/logo.webp" alt="Swisstek">
+        <span class="v-sep"></span>
+        <div>
+          <div class="v-ttl">Virtual showroom</div>
+          <div class="v-sub" id="dirLabel"></div>
+        </div>
+      </a>
+
+      <div class="v-space glass">
+        <span class="v-space__no" id="spNo">01</span>
+        <span>
+          <span class="v-space__n" id="spName"></span>
+          <span class="v-space__d" id="spBlurb"></span>
+        </span>
+      </div>
+
+      <div class="v-tools">
+        <div class="v-seg glass">
+          <button id="btnAll">All spaces</button>
+          <button id="btnSpec">Specification <span id="specN">0</span></button>
+        </div>
+        <button class="v-ico glass" id="btnReset" title="Reset view" aria-label="Reset view">
+          <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/></svg>
+        </button>
+        <button class="v-ico glass" id="btnFull" title="Fullscreen" aria-label="Fullscreen">
+          <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg>
+        </button>
+        <button class="v-cta" id="btnEnq">Request this specification</button>
+      </div>
+    </div>
+
+    <div class="v-bottom">
+      <div class="v-step glass">
+        <button id="btnPrev" title="Previous space" aria-label="Previous space">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M15 6l-6 6 6 6"/></svg>
+        </button>
+        <button id="btnNext" title="Next space" aria-label="Next space">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M9 6l6 6-6 6"/></svg>
+        </button>
+      </div>
+      <div class="v-points glass" id="rail"></div>
+      <div class="v-zoom glass">
+        <button id="zOut" aria-label="Zoom out"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/></svg></button>
+        <button id="zIn" aria-label="Zoom in"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></button>
+      </div>
+    </div>
+
+    <div class="v-note glass" id="vnote"></div>
+
+    <!-- all spaces -->
+    <div class="overlay" id="overlay">
+      <div class="overlay__h">
+        <div>
+          <div class="mono red">The journey</div>
+          <h2 class="t-lg" style="margin-top:8px;">Ten spaces</h2>
+        </div>
+        <button class="panel__x" id="ovClose" style="margin-left:auto;" aria-label="Close">
+          <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 6l12 12M18 6L6 18"/></svg>
+        </button>
+      </div>
+      <div class="overlay__g" id="grid"></div>
+    </div>
+
+
+    <!-- Direction 01 only: the persistent category index -->
+    <aside class="cats glass" id="cats">
+      <div class="cats__h">
+        <div class="mono red">Explore categories</div>
+        <div class="cats__t">The Swisstek range</div>
+      </div>
+      <div class="cats__b" id="catsList"></div>
+    </aside>
+
+    <!-- Direction 02 only: the guided route mini-map -->
+    <div class="map glass" id="map">
+      <div class="map__t">Showroom plan</div>
+      <div class="map__plan" id="plan"></div>
+      <div class="map__n" id="mapName"></div>
+    </div>
+
+    <!-- product card -->
+    <div class="pcard" id="card">
+      <button class="pcard__x" id="cardX" aria-label="Close">
+        <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+      <div class="pcard__media"><img id="cImg" src="" alt=""></div>
+      <div class="pcard__body">
+        <div class="pcard__n" id="cName"></div>
+        <div class="pcard__meta" id="cMeta"></div>
+        <div class="pcard__d" id="cBlurb"></div>
+        <div class="fchips" id="cFilter"></div>
+        <div class="chips" id="cChips"></div>
+        <div class="mono" id="cShade" style="margin-top:11px; letter-spacing:.06em;"></div>
+      </div>
+      <div class="pcard__acts">
+        <button id="cAdd"><span>Add to specification</span>
+          <svg class="arw" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 5v14M5 12h14"/></svg></button>
+        <button id="cCmp"><span>Compare</span>
+          <svg class="arw" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 7h7M4 17h7M17 4v16M14 7l3-3 3 3"/></svg></button>
+      </div>
+    </div>
+
+    <!-- collection / aluminium panel -->
+    <aside class="panel" id="panel">
+      <div class="panel__head">
+        <div>
+          <div class="mono red" id="pKicker"></div>
+          <h2 class="panel__ttl" id="pTitle" style="margin-top:8px;"></h2>
+        </div>
+        <button class="panel__x" id="pClose" aria-label="Close">
+          <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 6l12 12M18 6L6 18"/></svg>
+        </button>
+      </div>
+      <div class="panel__body" id="pBody"></div>
+    </aside>
+
+    <!-- specification drawer -->
+    <aside class="drawer" id="specDrawer">
+      <div class="panel__head">
+        <div>
+          <div class="mono red">Your selection</div>
+          <h2 class="panel__ttl" style="margin-top:8px;">Specification</h2>
+        </div>
+        <button class="panel__x" id="sClose" aria-label="Close">
+          <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 6l12 12M18 6L6 18"/></svg>
+        </button>
+      </div>
+      <div class="panel__body" id="specBody"></div>
+      <div class="panel__foot">
+        <p class="small" style="margin-bottom:14px; color:var(--soft);">
+          In the live platform this submits to Swisstek with the customer's contact
+          details and the product schedule.
+        </p>
+        <button class="btn btn--primary" style="width:100%;" id="sSend">Send enquiry</button>
+      </div>
+    </aside>
+
+    <!-- comparison -->
+    <div class="cmp" id="cmp">
+      <div class="panel__head">
+        <div><div class="mono red">Side by side</div>
+          <h2 class="panel__ttl" style="margin-top:8px;">Compare products</h2></div>
+        <button class="panel__x" id="cmpClose" style="margin-left:auto;" aria-label="Close">
+          <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 6l12 12M18 6L6 18"/></svg>
+        </button>
+      </div>
+      <div class="cmp__b" id="cmpBody"></div>
+    </div>
+  </div>
+
+  <div class="loading" id="ld">
+    <div class="loading__in">
+      <img src="../assets/img/logo.webp" alt="Swisstek" style="height:44px; margin:0 auto;">
+      <div class="mono" style="margin-top:18px;">Loading the showroom</div>
+      <div class="loading__bar"><i></i></div>
+    </div>
+  </div>
+</div>
+
+<div class="enq" id="enq">
+  <div class="enq__c">
+    <h3>Request this specification</h3>
+    <p>In the live platform this submits to Swisstek with the customer's contact
+       details, the saved views, and the product schedule below.</p>
+    <ul id="enqList"></ul>
+    <div class="foot">
+      <span class="mono">Prototype &middot; no data is sent</span>
+      <button class="btn btn--sm" id="enqClose">Close</button>
+    </div>
+  </div>
+</div>
+
+
+<script src="../assets/vendor/three.min.js"></script>
+<script src="../assets/js/data.js"></script>
+<script src="../assets/js/pano.js"></script>
+<script>SW.base = '../';</script>
+<script src="../assets/js/tour.js"></script>
+<script>
+document.getElementById('dirLabel').textContent = 'Direction 02 · Product tour';
+document.getElementById('vnote').textContent = 'Ten spaces. Click a product, or the red play marker to watch. All 39 films are Swisstek’s own. Environments are generated concept visualisation; product data is real.';
+new Tour({ mode: 'product' });
+</script>
+</body>
+</html>

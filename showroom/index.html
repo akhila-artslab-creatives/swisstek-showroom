@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Swisstek Virtual Showroom | Three routes, one content layer</title>
+<meta name="description" content="Three working samples of the Swisstek interactive 3D virtual showroom: luxury 360 category tour, product-focused 360 tour, and a fully interactive real-time 3D configurator.">
+<link rel="stylesheet" href="../assets/css/system.css">
+<style>
+.top{ padding-block:clamp(52px,6vw,92px) 0; }
+.rt{ border:1px solid var(--line); overflow:hidden; display:grid;
+  grid-template-columns:1.15fr 1fr; }
+.rt + .rt{ margin-top:26px; }
+.rt--flip .rt__media{ order:2; }
+.rt__media{ position:relative; min-height:430px; background:var(--wash); overflow:hidden; }
+.rt__media img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
+  transition:transform .9s var(--ease); }
+.rt:hover .rt__media img{ transform:scale(1.035); }
+.rt__no{ position:absolute; top:22px; left:22px; padding:10px 16px;
+  background:rgba(255,255,255,.92); -webkit-backdrop-filter:var(--glass-blur);
+  backdrop-filter:var(--glass-blur); border:1px solid rgba(226,230,233,.85);
+  font-family:'PlexMono',monospace; font-size:12px; letter-spacing:.15em; color:var(--red); }
+.rt__txt{ padding:clamp(30px,3.4vw,54px); display:flex; flex-direction:column; }
+.rt__ttl{ margin-top:14px; }
+.rt__d{ margin-top:16px; }
+.rt__sp{ margin:26px 0 0; border-top:1px solid var(--line); }
+.rt__sp div{ display:flex; gap:18px; padding:12px 0; border-bottom:1px solid var(--line);
+  font-size:16px; align-items:baseline; }
+.rt__sp b{ font-family:'PlexMono',monospace; font-size:11.5px; letter-spacing:.11em;
+  text-transform:uppercase; color:var(--soft); flex:0 0 118px; }
+.rt__sp span{ color:var(--body); }
+.rt__acts{ margin-top:auto; padding-top:30px; display:flex; gap:12px; flex-wrap:wrap; }
+.pill{ display:inline-flex; align-items:center; gap:8px; padding:7px 13px;
+  border:1px solid var(--line); font-family:'PlexMono',monospace; font-size:11px;
+  letter-spacing:.1em; text-transform:uppercase; color:var(--body); }
+.pill i{ width:6px; height:6px; border-radius:50%; background:var(--red);
+  display:block; flex:0 0 auto; }
+.pill--live i{ background:#1FA463; }
+.note{ border:1px solid var(--line); background:var(--wash); padding:26px 30px;
+  margin-top:44px; }
+@media (max-width:980px){
+  .rt{ grid-template-columns:1fr; }
+  .rt--flip .rt__media{ order:0; }
+  .rt__media{ min-height:280px; }
+}
+</style>
+<link rel="stylesheet" href="../assets/css/gate.css">
+<script src="../assets/js/gate.js"></script>
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap nav__in">
+    <a class="nav__logo" href="../index.html"><img src="../assets/img/logo.webp" alt="Swisstek"></a>
+    <nav class="nav__links">
+      <a href="../index.html">Home</a>
+      <a href="../index.html#products">Products</a>
+      <a href="#routes" class="on">Virtual showroom</a>
+      <a class="btn btn--sm" href="../index.html#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<section class="wrap top">
+  <div class="eyebrow"><span class="mono red">Proposal &middot; three directions</span></div>
+  <h1 class="t-xl" style="max-width:19ch;">Three routes into the same showroom.</h1>
+  <p class="lede" style="margin-top:22px; max-width:660px;">
+    The proposal offers three ways to build the virtual showroom. All three are working
+    below, so the choice can be made by using them rather than by reading about them.
+    All three share one content layer: ten spaces, the same products, the same 25 grout
+    shades, the same running specification. What changes is how the customer moves.
+    The tour covers the finishing range, Roof Master, Swissparkett, decorative pebbles
+    and Swisstek Aluminium.
+  </p>
+</section>
+
+<section class="section" id="routes">
+  <div class="wrap">
+
+    <!-- ------------------------------------------------ direction 01 -- -->
+    <article class="rt reveal">
+      <div class="rt__media">
+        <img src="../assets/pano/prev/atrium.webp" alt="Luxury 360 category showroom">
+        <div class="rt__no">Direction 01</div>
+      </div>
+      <div class="rt__txt">
+        <span class="pill pill--live"><i></i>Working sample</span>
+        <h2 class="t-lg rt__ttl">Luxury 360&deg;<br>category showroom</h2>
+        <p class="body rt__d">
+          A cinematic environment organised around the three Swisstek collections. The
+          customer moves through ten spaces and each zone is a gateway to a product
+          family, rather than every product being physically on display.
+        </p>
+        <div class="rt__sp">
+          <div><b>Movement</b><span>Ten spaces, guided route or free jump</span></div>
+          <div><b>Strength</b><span>Highest render quality, lowest technical risk</span></div>
+          <div><b>Limitation</b><span>Surfaces cannot change inside the panorama</span></div>
+        </div>
+        <div class="rt__acts">
+          <a class="btn btn--primary" href="direction-01.html">
+            Open direction 01
+            <svg class="arw" viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+        </div>
+      </div>
+    </article>
+
+    <!-- ------------------------------------------------ direction 02 -- -->
+    <article class="rt rt--flip reveal">
+      <div class="rt__media">
+        <img src="../assets/pano/prev/tiling.webp" alt="Product-focused 360 showroom">
+        <div class="rt__no">Direction 02</div>
+      </div>
+      <div class="rt__txt">
+        <span class="pill pill--live"><i></i>Working sample</span>
+        <h2 class="t-lg rt__ttl">Product-focused<br>360&deg; showroom</h2>
+        <p class="body rt__d">
+          A realistic showroom where products are selected directly from the scene. Point
+          at the pack, open the pack. Product cards carry the real pack shot, pack size,
+          standards and the full shade chart with family filtering, and products can be
+          compared side by side without leaving the room. Swisstek's own films play inside
+          the space: 39 usage guides, fabrication walkthroughs and product films pulled
+          from the Swisstek Ceylon PLC and Swisstek Aluminium channels.
+        </p>
+        <div class="rt__sp">
+          <div><b>Movement</b><span>Ten spaces, click products in the room</span></div>
+          <div><b>Strength</b><span>Direct product discovery, video in the room, compare side by side</span></div>
+          <div><b>Limitation</b><span>Layout changes need new renders</span></div>
+        </div>
+        <div class="rt__acts">
+          <a class="btn btn--primary" href="direction-02.html">
+            Open direction 02
+            <svg class="arw" viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+        </div>
+      </div>
+    </article>
+
+    <!-- ------------------------------------------------ direction 03 -- -->
+    <article class="rt reveal">
+      <div class="rt__media">
+        <img src="../assets/img/scenes/hero-living.webp" alt="Real-time 3D configurator">
+        <div class="rt__no">Direction 03</div>
+      </div>
+      <div class="rt__txt">
+        <span class="pill pill--live"><i></i>Working sample</span>
+        <h2 class="t-lg rt__ttl">Fully interactive<br>real-time 3D</h2>
+        <p class="body rt__d">
+          A live 3D room rendered in the browser. The surfaces respond: change the grout
+          shade across all 25 real Swisstek colours, switch the floor system, adjust tile
+          format and joint width, and watch the specification rewrite itself.
+        </p>
+        <div class="rt__sp">
+          <div><b>Movement</b><span>Free orbit and walk, real-world scale</span></div>
+          <div><b>Strength</b><span>The only route where surfaces actually change</span></div>
+          <div><b>Limitation</b><span>Highest production and optimisation load</span></div>
+        </div>
+        <div class="rt__acts">
+          <a class="btn btn--primary" href="direction-03.html">
+            Open direction 03
+            <svg class="arw" viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+        </div>
+      </div>
+    </article>
+
+    <div class="note reveal">
+      <div class="mono red">How to read these samples</div>
+      <p class="body" style="margin-top:12px; max-width:900px;">
+        Product photography, product names, pack sizes, standards and the 25 grout shade
+        codes are real and come from Swisstek's own catalogue and website, including the
+        Swisstek Aluminium range. The showroom environments are generated concept
+        visualisation, standing in for the panoramas a production build would render
+        properly, so packaging shown in the rooms is approximate. Every product card uses
+        the real photograph. Direction 03 is genuinely live 3D, not a video.
+      </p>
+    </div>
+
+  </div>
+</section>
+
+<footer class="foot">
+  <div class="wrap" style="display:flex; justify-content:space-between; flex-wrap:wrap; gap:18px;">
+    <span class="small" style="color:var(--soft);">Swisstek &times; Artslab Creatives</span>
+    <span class="small" style="color:var(--soft);">Concept demonstration</span>
+  </div>
+</footer>
+
+<script src="../assets/js/ui.js"></script>
+</body>
+</html>
